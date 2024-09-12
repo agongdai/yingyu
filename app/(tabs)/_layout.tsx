@@ -32,6 +32,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="rnuilib"
+        options={{
+          title: 'UI Lib',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'library' : 'library-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
