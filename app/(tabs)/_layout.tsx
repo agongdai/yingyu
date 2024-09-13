@@ -13,9 +13,10 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
@@ -24,7 +25,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name='explore'
         options={{
           title: 'Explorer',
           tabBarIcon: ({ color, focused }) => (
@@ -33,11 +34,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="rnuilib"
+        name='rnuilib'
         options={{
           title: 'UI Lib',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'library' : 'library-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name='user'
+        options={{
+          title: 'Me',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),
         }}
       />
