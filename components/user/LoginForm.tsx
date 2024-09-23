@@ -1,13 +1,11 @@
 import React from 'react';
-
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Colors, TextField } from 'react-native-ui-lib';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-
+import { Button, Colors, TextField } from 'react-native-ui-lib';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
@@ -26,12 +24,12 @@ export default function LoginForm() {
       await AsyncStorage.setItem('user', JSON.stringify(user));
       router.push('/explore');
     } catch (error) {
-      alert('ERROR ' + JSON.stringify(error?.toString()));
+      console.error('ERROR ' + JSON.stringify(error?.toString()));
     }
   };
 
   return (
-    <ThemedView style={styles.titleContainer}>
+    <ThemedView>
       <ThemedText type='title'>欢迎您</ThemedText>
       <ThemedView style={styles.content}>
         <TextField
@@ -60,9 +58,6 @@ export default function LoginForm() {
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    paddingTop: 20,
-  },
   content: {
     paddingTop: 32,
   },

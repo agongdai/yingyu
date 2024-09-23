@@ -1,8 +1,7 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet } from 'react-native';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import LoginForm from '@/components/user/LoginForm';
+import UserArea from '@/components/user/UserArea';
 
 export default function UserScreen() {
   return (
@@ -10,7 +9,7 @@ export default function UserScreen() {
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={<Ionicons size={250} name='log-in' style={styles.headerImage} />}
     >
-      <LoginForm />
+      <UserArea />
     </ParallaxScrollView>
   );
 }

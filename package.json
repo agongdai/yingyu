@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint",
+    "lint": "npx expo lint",
     "eas-build": "eas build --platform android --profile development",
     "format": "prettier --ignore-path .gitignore \"./**/*.+(ts|tsx|js|scss|css)\" --write"
   },

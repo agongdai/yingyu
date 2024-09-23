@@ -1,5 +1,8 @@
 import type { PropsWithChildren, ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, useColorScheme } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePathname } from 'expo-router';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -7,11 +10,7 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 import { ThemedText } from '@/components/ThemedText';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { usePathname } from 'expo-router';
-
 import { ThemedView } from '@/components/ThemedView';
-import { useEffect, useState } from 'react';
 
 const HEADER_HEIGHT = 200;
 
