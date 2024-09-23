@@ -6,10 +6,14 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from 'react-native-reanimated';
+import { ThemedText } from '@/components/ThemedText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePathname } from 'expo-router';
 
 import { ThemedView } from '@/components/ThemedView';
+import { useEffect, useState } from 'react';
 
-const HEADER_HEIGHT = 150;
+const HEADER_HEIGHT = 200;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -23,7 +27,28 @@ export default function ParallaxScrollView({
 }: Props) {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
+  const pathname = usePathname();
   const scrollOffset = useScrollViewOffset(scrollRef);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function checkStatus() {
+      try {
+        const userStr = (await AsyncStorage.getItem('user')) || '';
+        const user = JSON.parse(userStr);
+        if (user?.bearer) {
+          setUser(user);
+        }
+        setCheckingStatus(false);
+      } catch (e) {
+        console.debug('Error checking status:', e);
+        await AsyncStorage.removeItem('user');
+      }
+    }
+
+    checkStatus();
+  }, []);
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -54,7 +79,16 @@ export default function ParallaxScrollView({
         >
           {headerImage}
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <ThemedView style={styles.content}>
+          {checkingStatus && pathname !== '/user' ? (
+            <ThemedText>
+              Checking e {pathname} {checkingStatus} ...
+            </ThemedText>
+          ) : (
+            children
+          )}
+          <ThemedText>{user ? JSON.stringify(user) : null}</ThemedText>
+        </ThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );
@@ -65,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    height: 150,
+    height: 200,
     overflow: 'hidden',
   },
   content: {
