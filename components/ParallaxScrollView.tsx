@@ -37,7 +37,7 @@ export default function ParallaxScrollView({
       try {
         const userStr = (await AsyncStorage.getItem('user')) || '""';
         const user = JSON.parse(userStr);
-        setUser((user?.bearer && user?.isActive) ? user : null);
+        setUser(user?.bearer && user?.isActive ? user : null);
         setCheckingStatus(false);
       } catch (e) {
         console.debug('Error checking status:', e);
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 32,
+    padding: 20,
     gap: 16,
     overflow: 'hidden',
   },

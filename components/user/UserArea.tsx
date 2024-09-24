@@ -10,7 +10,7 @@ import Profile from './Profile';
 export default function UserArea() {
   const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
-  
+
   useEffect(() => {
     async function checkStatus() {
       try {
@@ -38,9 +38,9 @@ export default function UserArea() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingTop: 0,
   },
   content: {
-    paddingTop: 32,
+    paddingTop: 20,
   },
 });

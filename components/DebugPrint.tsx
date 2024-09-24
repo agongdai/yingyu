@@ -4,13 +4,12 @@ import { ThemedText } from './ThemedText';
 import { ThemedView } from './ThemedView';
 
 export default function DebugPrint({ children }: { children: React.ReactNode }) {
-  return process.env.NODE_ENV === 'development'
-    ? (
-      <ThemedView style={styles.container}>
-        <ThemedText style={styles.text}>--- Debugging info ---</ThemedText>
-        <ThemedText style={styles.text}>{children}</ThemedText>
-      </ThemedView>
-    ) : null;
+  return process.env.NODE_ENV === 'development' ? (
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.text}>--- Debugging info ---</ThemedText>
+      <ThemedText style={styles.text}>{children}</ThemedText>
+    </ThemedView>
+  ) : null;
 }
 
 const styles = StyleSheet.create({
@@ -22,5 +21,5 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'rgba(217, 22, 86, 0.85)',
-  }
+  },
 });
