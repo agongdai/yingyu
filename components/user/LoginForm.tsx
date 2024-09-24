@@ -10,6 +10,7 @@ import { ThemedView } from '@/components/ThemedView';
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const login = async () => {
     try {
@@ -21,10 +22,18 @@ export default function LoginForm() {
         body: JSON.stringify({ username, password }),
       });
       const user = await response.json();
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      router.push('/explore');
+
+      if (user?.bearer && user?.isActive) {
+        await AsyncStorage.setItem('user', JSON.stringify(user));
+        setError('');
+        router.push('/explore');
+      } else {
+        setError('登录失败，请检查用户名和密码。');
+      }
     } catch (error) {
-      console.error('ERROR ' + JSON.stringify(error?.toString()));
+      setError('登录失败，请检查网络连接或者重试登录。');
+      await AsyncStorage.removeItem('user');
+      console.error('ERROR: ' + JSON.stringify(error?.toString()));
     }
   };
 
@@ -45,6 +54,7 @@ export default function LoginForm() {
           secureTextEntry
           onChangeText={(v) => setPassword(v)}
         />
+        {error ? <ThemedText style={{ color: Colors.red30 }}>{error}</ThemedText> : null}
         <Button
           style={styles.submitButton}
           onPress={login}

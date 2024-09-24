@@ -9,6 +9,7 @@ import Animated, {
   useAnimatedStyle,
   useScrollViewOffset,
 } from 'react-native-reanimated';
+import DebugPrint from '@/components/DebugPrint';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
@@ -34,11 +35,9 @@ export default function ParallaxScrollView({
   useEffect(() => {
     async function checkStatus() {
       try {
-        const userStr = (await AsyncStorage.getItem('user')) || '';
+        const userStr = (await AsyncStorage.getItem('user')) || '""';
         const user = JSON.parse(userStr);
-        if (user?.bearer) {
-          setUser(user);
-        }
+        setUser((user?.bearer && user?.isActive) ? user : null);
         setCheckingStatus(false);
       } catch (e) {
         console.debug('Error checking status:', e);
@@ -47,7 +46,7 @@ export default function ParallaxScrollView({
     }
 
     checkStatus();
-  }, []);
+  }, [pathname]);
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -86,7 +85,7 @@ export default function ParallaxScrollView({
           ) : (
             children
           )}
-          <ThemedText>{user ? JSON.stringify(user) : null}</ThemedText>
+          <DebugPrint>{user ? JSON.stringify(user) : 'Not logined'}</DebugPrint>
         </ThemedView>
       </Animated.ScrollView>
     </ThemedView>
