@@ -61,7 +61,7 @@ export default function Profile({ user }: { user: User }) {
         body: formData,
         headers: {
           'content-type': 'multipart/form-data',
-          'Authorization': `Bearer ${user?.bearer}`,
+          Authorization: `Bearer ${user?.bearer}`,
         },
       });
       const res = await response.json();
@@ -73,9 +73,9 @@ export default function Profile({ user }: { user: User }) {
         setApiMessage('头像修改失败。可能您的登录状态已超时。');
       }
     } catch (error) {
-      console.error('ERROR: ' + JSON.stringify(error?.toString()));
+      setApiMessage('头像修改失败。请检查网络或者重试。');
     }
-  }
+  };
 
   return (
     <ThemedView>
@@ -112,8 +112,7 @@ export default function Profile({ user }: { user: User }) {
         position='top'
         preset='failure'
         message={apiMessage}
-      >
-      </Toast>
+      />
     </ThemedView>
   );
 }
