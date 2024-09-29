@@ -21,9 +21,10 @@ export default function LoginForm() {
         },
         body: JSON.stringify({ username, password }),
       });
-      const user = await response.json();
+      const res = await response.json();
+      const user = res?.data;
 
-      if (user?.bearer && user?.isActive) {
+      if (res.success && user?.bearer && user?.isActive) {
         await AsyncStorage.setItem('user', JSON.stringify(user));
         setError('');
         router.push('/explore');
