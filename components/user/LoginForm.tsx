@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Button, Colors, TextField } from 'react-native-ui-lib';
+import Sha256 from 'sha256';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
@@ -19,7 +20,7 @@ export default function LoginForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password: Sha256(password) }),
       });
       const res = await response.json();
       const user = res?.data;
